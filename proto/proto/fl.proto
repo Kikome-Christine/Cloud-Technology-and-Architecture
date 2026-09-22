@@ -1,0 +1,40 @@
+syntax = "proto3";
+
+package fl;
+
+service Scheduler {
+  rpc SelectParticipants(ParticipantRequest) returns (ParticipantResponse);
+}
+
+service Participant {
+  rpc Train(TrainRequest) returns (TrainResponse);
+}
+
+message ParticipantRequest {
+  uint32 required_participants = 1;
+}
+
+message ParticipantResponse {
+  repeated ParticipantInfo participants = 1;
+}
+
+message ParticipantInfo {
+  string id = 1;
+  uint32 cpu_cores = 2;
+  uint32 memory_gb = 3;
+  uint32 bandwidth_mbps = 4;
+  uint32 latency_ms = 5;
+  bool regulatory_eligible = 6;
+  bool available = 7;
+}
+
+message TrainRequest {
+  uint32 round = 1;
+}
+
+message TrainResponse {
+  string participant_id = 1;
+  float local_loss = 2;
+  uint64 training_ms = 3;
+  uint64 update_bytes = 4;
+}

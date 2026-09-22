@@ -1,0 +1,68 @@
+services:
+  coordinator:
+    build: ./coordinator
+    environment:
+      SCHEDULER_URL: http://scheduler:50051
+    depends_on:
+      - scheduler
+    networks: 
+      - flnet
+
+  scheduler:
+    build: 
+      context: .
+      dockerfile: scheduler/Dockerfile
+    environment:
+      PARTICIPANT_URLS: http://participant1:50052,http://participant2:50052,http://participant3:50052
+    depends_on:
+      - participant1
+      - participant2
+      - participant3
+    networks: 
+      - flnet
+
+  participant1:
+    build: 
+      context: .
+      dockerfile: participant/Dockerfile
+    environment:
+      PARTICIPANT_ID: bank-a
+      CPU_CORES: "4"
+      MEMORY_GB: "8"
+      BANDWIDTH_MBPS: "100"
+      NETWORK_LATENCY_MS: "20"
+      REGULATORY_ELIGIBLE: "true"
+    networks: 
+      - flnet
+
+  participant2:
+    build: 
+      context: .
+      dockerfile: participant/Dockerfile
+    environment:
+      PARTICIPANT_ID: bank-b
+      CPU_CORES: "2"
+      MEMORY_GB: "4"
+      BANDWIDTH_MBPS: "20"
+      NETWORK_LATENCY_MS: "80"
+      REGULATORY_ELIGIBLE: "true"
+    networks: 
+      - flnet
+
+  participant3:
+    build: 
+      context: .
+      dockerfile: participant/Dockerfile
+    environment:
+      PARTICIPANT_ID: institution-c
+      CPU_CORES: "1"
+      MEMORY_GB: "2"
+      BANDWIDTH_MBPS: "5"
+      NETWORK_LATENCY_MS: "250"
+      REGULATORY_ELIGIBLE: "false"
+    networks: 
+      - flnet
+
+networks:
+  flnet:
+    driver: bridge

@@ -1,6 +1,6 @@
 # Federated Learning Orchestration for Financial Regulatory Authorities
 
-Rust + Docker prototype aligned with the paper:
+Rust + Docker prototype for :
 **Federated learning orchestration across heterogeneous edge and cloud nodes for financial regulatory authorities**
 
 ## What this prototype demonstrates
@@ -15,8 +15,7 @@ Rust + Docker prototype aligned with the paper:
 - Latency, communication and resource metadata collection
 - Participant failure handling
 
-This is the functional prototype for the MCS 7101 experiment. It is intentionally
-small so that it can be extended into the required 30-repetition experiments,
+ It is intentionally small so that it can be extended into the required 30-repetition experiments,
 network degradation trials, and baseline comparisons.
 
 ## Architecture
